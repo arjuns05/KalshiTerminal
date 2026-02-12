@@ -51,3 +51,28 @@ Kalshi WebSocket ingestion (either inside API or in a separate ingestor service)
 subscription routing (only send updates for tickers the user is watching)
 
 If you want, I can diagram the data flow in 5 lines and tell you exactly which file changes tomorrow to add subscribe/unsubscribe.
+
+
+
+## Client -> Server
+- subscribe
+  - { "type": "subscribe", "tickers": ["TEST1", "TEST2"], "ts": <ms> }
+
+- unsubscribe
+  - { "type": "unsubscribe", "tickers": ["TEST1"], "ts": <ms> }
+
+## Server -> Client
+- hello
+  - { "type": "hello", "ts": <ms> }
+
+- subscribed
+  - { "type": "subscribed", "tickers": ["TEST1"], "ts": <ms> }
+
+- book
+  - { "type": "book", "ticker": "TEST1", "ts": <ms>, "mid": 0.52,
+      "bids": [[price, qty], ...], "asks": [[price, qty], ...] }
+
+- trade
+  - { "type": "trade", "ticker": "TEST1", "ts": <ms>, "price": 0.52, "qty": 10 }
+
+
